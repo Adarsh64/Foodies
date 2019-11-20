@@ -1,0 +1,198 @@
+<style>
+	/* The container */
+	.container {
+		display: block;
+		position: relative;
+		padding-left: 35px;
+		margin-bottom: 12px;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	/* Hide the browser's default radio button */
+	.container > input {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+	/* Create a custom radio button */
+	.checkmark {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 25px;
+		width: 25px;
+		background-color: #eee;
+		border-radius: 50%;
+	}
+
+	/* On mouse-over, add a grey background color */
+	.container:hover input ~ .checkmark {
+		background-color: #ccc;
+	}
+
+	/* When the radio button is checked, add a blue background */
+	.container input:checked ~ .checkmark {
+		background-color: #2196f3;
+	}
+
+	/* Create the indicator (the dot/circle - hidden when not checked) */
+	.checkmark:after {
+		content: "";
+		position: absolute;
+		display: none;
+	}
+
+	/* Show the indicator (dot/circle) when checked */
+	.container input:checked ~ .checkmark:after {
+		display: block;
+	}
+
+	/* Style the indicator (dot/circle) */
+	.container .checkmark:after {
+		top: 9px;
+		left: 9px;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: white;
+	}
+
+	.stuff > ul,
+	li,
+	table,
+	th,
+	tr,
+	td,
+	form {
+		background-color: #f5f5f5;
+	}
+</style>
+
+<div style="background-color: #f5f5f5;">
+	<div class="stuff">
+		<table class="table table-bordered">
+			<tr>
+				<td><b>Item</b></td>
+				<td class="tdCenter"><b>Quantity</b></td>
+				<td class="tdRight"><b>Price</b></td>
+				<td class="tdRight"><b>Take Away Charges</b></td>
+				<td></td>
+			</tr>
+
+			<!-- empty items list message -->
+			<tr ng-hide="$ctrl.getTotalCount() > 0">
+				<td class="tdCenter" colspan="5">
+					Your item list is empty!
+				</td>
+			</tr>
+
+			<tr ng-repeat="item in $ctrl.items">
+				<td>{{ item.name }}</td>
+				<td class="tdCenter">
+					<div class="input-append">
+						<input
+							class="text-center"
+							type="tel"
+							ng-model="item.quantity"
+							ng-disabled="true"
+						/>
+						<button
+							class="btn btn-success"
+							type="button"
+							ng-disabled="item.quantity >= 1000"
+							ng-click="$ctrl.addItem(item.name, item.price,1,item.take_away_charges)"
+						>
+							+
+						</button>
+						<button
+							class="btn btn-danger"
+							type="button"
+							ng-disabled="item.quantity <= 1"
+							ng-click="$ctrl.addItem(item.name, item.price, -1,item.take_away_charges)"
+						>
+							-
+						</button>
+					</div>
+				</td>
+				<td class="tdRight">
+					&#8377; {{ item.price * item.quantity }}
+				</td>
+				<td class="tdRight">
+					&#8377; {{ item.take_away_charges * item.quantity }}
+				</td>
+				<td class="tdCenter" title="remove from cart">
+					<a
+						href=""
+						ng-click="$ctrl.addItem(item.name, item.price, -10000000,item.take_away_charges)"
+					>
+						Remove Item
+					</a>
+				</td>
+			</tr>
+
+			<tr class="well">
+				<td><b>Total</b></td>
+				<td class="tdCenter">
+					<b>{{ $ctrl.getTotalCount() }}</b>
+				</td>
+				<td class="tdRight">
+					<b>&#8377; {{ $ctrl.getTotalPrice() }}</b>
+				</td>
+				<td class="tdRight">
+					<b>&#8377; {{ $ctrl.getTotalTakeAwayCharges() }}</b>
+				</td>
+				<td class="tdRight">
+					<b>
+						Total = &#8377; {{ $ctrl.getTotalPrice() +
+						$ctrl.getTotalTakeAwayCharges() }}</b
+					>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<button
+		type="button"
+		class="btn btn-primary btn-block"
+		ng-disabled="$ctrl.getTotalCount()<1"
+		ng-click="$ctrl.confirmOrder()"
+	>
+		Confirm Order
+	</button>
+
+	<hr />
+
+	<div ng-show="$ctrl.showPayment == true" class="stuff">
+		<h2 style="text-decoration: underline">
+			Payment options:
+		</h2>
+		<form>
+			<div ng-repeat="p in $ctrl.paymentMethods track by $index">
+				<label class="container"
+					>{{ p }}
+					<input
+						type="radio"
+						name="occurrences"
+						ng-value="p"
+						ng-model="$ctrl.mode"
+					/>
+					<span class="checkmark"></span>
+				</label>
+			</div>
+		</form>
+
+		<button
+			type="button"
+			class="btn btn-primary btn-block"
+			ng-disabled="$ctrl.mode == null"
+			ng-click="$ctrl.confirmPayment()"
+		>
+			Confirm Payment
+		</button>
+	</div>
+</div>
