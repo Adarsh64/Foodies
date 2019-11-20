@@ -20,7 +20,7 @@ import authService from "./services/autentication-service";
 import dataService from "./services/data-service";
 
 angular
-	.module("dineTime", [
+	.module("foodForks", [
 		ngRoute,
 		ngResource,
 		uiBootstrap,
