@@ -74,4 +74,8 @@ export default class dataService {
 	getTables() {
 		return this.$http.get(this.ip + "/api/v1/tables");
 	}
+
+	getHotelsList(){
+		return this.$http.get(this.ip+"/api/v1/hotels");			
+	}
 }
