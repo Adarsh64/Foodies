@@ -1,0 +1,8 @@
+<div class="hotels">
+	<div ng-repeat="item in $ctrl.hotels" class="hotel">
+		<img ng-src="noodles.jpeg" class="image">
+		<div class="name">{{ item.name }} </div>
+		<div class="description">{{ item.description }} </div>
+		<div class="ratings"><img class="star" width="25px" height="25px"  ng-src="star2.png"> &nbsp; {{ item.ratings }} </div>
+	</div>
+</div>

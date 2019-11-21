@@ -16,6 +16,8 @@ import { menuComponent } from "./components/menu";
 import { orderComponent } from "./components/confirm-order";
 import { ratingComponent } from "./components/rating";
 
+import { listHotelsComponent } from "./components/listHotels";
+
 import authService from "./services/autentication-service";
 import dataService from "./services/data-service";
 
@@ -38,6 +40,7 @@ angular
 	.component("menuComponent", menuComponent)
 	.component("orderComponent", orderComponent)
 	.component("ratingComponent", ratingComponent)
+	.component("listHotelsComponent",listHotelsComponent)
 
 	.service("authService", authService)
 	.service("dataService", dataService)
@@ -78,6 +81,10 @@ angular
 			.when("/rating", {
 				template: "<rating-component></rating-component>",
 				access: { restricted: true }
+			})
+			.when("/listHotels",{
+				template: "<list-hotels-component></list-hotels-component>",
+				access: { restricted: false }
 			});
 
 		$locationProvider.html5Mode(true);
