@@ -388,6 +388,10 @@ def booktables():
 	
 	return jsonify({"tables":output})
 
+@app.route('/api/v1/hotels',methods=['GET'])
+def getHotels():
+    res =  [{"name": "abc","ratings": 3.8,"image": "im","description": "fast food"},{"name": "def","ratings": 4.8,"image": "im","description": "fast food"},{"name": "ghi","ratings": 3.8,"image": "im","description": "fast food"},{"name": "klj","ratings": 3.8,"image": "im","description": "fast food"}]
+    return jsonify({"hotels":res})
 
 @app.route("/")
 def home():
