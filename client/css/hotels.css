@@ -1,0 +1,51 @@
+.hotel{
+	position: relative;
+	border: 1px solid black;
+	width: 750px;
+	top: 50px;
+	height: 200px;
+	margin-bottom: 8px;
+	left: 180px;
+	background-color: white;
+	cursor: pointer;
+}
+
+.hotel:hover{
+	width: 780px;
+	left: 170px;
+	height: 210px;
+}
+.name {
+	position: relative;
+	left: 280px;
+	top: -115px;
+	font-weight: bold;
+	font-size: 25px;
+}
+
+.description {
+	position: relative;
+	left: 280px;
+	top: -95px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.image{
+	position: relative;
+	top: 30px;
+	left: 30px;
+	width: 200px;
+}
+
+.ratings{
+	position: relative;
+	left: 280px;
+	top: -75px;
+	font-weight: bold;
+}
+
+.star{
+	position: relative;
+	top: -3px;
+}
