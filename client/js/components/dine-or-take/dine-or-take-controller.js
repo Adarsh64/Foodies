@@ -9,7 +9,11 @@ export default class dineTakeController {
 			console.log(sessionStorage.key(i));
 			if (
 				sessionStorage.key(i) != "user" &&
-				sessionStorage.key(i) != "username"
+				sessionStorage.key(i) != "username" &&
+				sessionStorage.key(i) != "hotelId" &&
+				sessionStorage.key(i) != "Latdest" &&
+				sessionStorage.key(i) != "Lngdest"
+ 
 			) {
 				console.log("removed", sessionStorage.key(i));
 				sessionStorage.removeItem(sessionStorage.key(i));

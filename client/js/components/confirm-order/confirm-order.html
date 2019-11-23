@@ -195,4 +195,12 @@
 			Confirm Payment
 		</button>
 	</div>
+	<div ng-show="$ctrl.showETA == true" class="stuff">
+		<br>
+		<h3>Duration &nbsp;  {{$ctrl.duration}}</h3>
+		<br>
+		<h3>Distance &nbsp;  {{$ctrl.distance}}</h3>
+		<button 		type="button"
+		class="btn btn-primary btn-block" ng-click="$ctrl.takeToRating()">Click here to Rate!</button>
+	</div>
 </div>

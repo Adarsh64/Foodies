@@ -27,7 +27,7 @@ export default class loginController {
 					ctrl.success = true;
 					ctrl.message = "Login Successful!";
 					ctrl.$timeout(function() {
-						ctrl.$location.path("/dine-or-take");
+						ctrl.$location.path("/listHotels");
 					}, 500);
 				} else {
 					sessionStorage.user = false;

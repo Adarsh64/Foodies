@@ -17,6 +17,8 @@ export default class orderController {
 
 		this.mode = null;
 		this.showPayment = false;
+		this.showETA = false;
+		this.self = this;
 	}
 
 	getTotalCount() {
@@ -130,18 +132,54 @@ export default class orderController {
 		});
 	}
 
+	getMapdetails() {
+		/*const Latorigin = "12.935";
+		const Lngorigin = "77.534";*/
+		if (navigator.geolocation) {
+    		navigator.geolocation.getCurrentPosition(this.showPosition);
+    		
+    		
+    		} 
+    	else { 
+    		alert("Geolocation is not supported by this browser.");
+  		}
+  		
+	}
+
+	showPosition(position) {
+		console.log("hi");
+  		sessionStorage.Latorigin =  position.coords.latitude;
+  		sessionStorage.Lngorigin =  position.coords.longitude;		
+	}
+
 	confirmPayment() {
+		
 		const ctrl = this;
+		//get map details
+		ctrl.showETA = true;
+		//ctrl.getMapdetails();
+		sessionStorage.Latorigin = "12.935";
+		sessionStorage.Lngorigin = "77.534";
+		console.log(sessionStorage.Latorigin,sessionStorage.Lngorigin,sessionStorage.Latdest,sessionStorage.Lngdest);
+    	this.dataService.getMapDetails(sessionStorage.Latorigin,sessionStorage.Lngorigin,sessionStorage.Latdest,sessionStorage.Lngdest).then(function(response) {
+			console.log(response.data);
+			ctrl.duration = response.data.duration;
+			ctrl.distance = response.data.distance;
+		});	
 		const orderId = sessionStorage.orderId;
 		this.dataService.approvePayment(orderId).then(function(response) {
-			if (response.data.approval == 1) {
+			//if (response.data.approval == 1) {
 				ctrl.$window.alert("Payment approved!");
-				ctrl.$location.path("/rating");
-			} else {
-				ctrl.$timeout(function() {
-					ctrl.confirmPayment();
-				}, 1500);
-			}
+				//ctrl.$location.path("/rating");
+			//} else {
+			//	ctrl.$timeout(function() {
+			//		ctrl.confirmPayment();
+			//	}, 1500);
+			//}
 		});
+	}
+	
+	takeToRating(){
+		this.$location.path("/rating");
 	}
 }

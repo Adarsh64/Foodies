@@ -16,12 +16,12 @@ from flask_login import current_user
 import requests
 import json
 import ast
-import googlemaps
 
 db_path = "./foodforks.db"
 
 class User(UserMixin):
     pass
+
 
 def select_hotels (conn):
     outerList = []
@@ -32,7 +32,7 @@ def select_hotels (conn):
         row = list(row)
         outerList.append(row)
     return outerList
-    
+
 def get_db():
     db = sqlite3.connect(db_path)
     cursor = db.cursor()
@@ -295,7 +295,7 @@ def fetch_menu(hotel_id):
     cursor.execute("SELECT * FROM item_category ")
     b = cursor.fetchall()
     #print (b)  -- list of tuples
-    #print(a)
+	#print(a)
     result = {}
     for row in b:
         cursor.execute("SELECT name,price,take_away_charges from menu WHERE hotel_id=" + hid + " and category_id ="+ str(row[0]))
@@ -401,11 +401,6 @@ def booktables():
 	
 	return jsonify({"tables":output})
 
-# @app.route('/api/v1/hotels',methods=['GET'])
-# def getHotels():
-#     res =  [{"id":1,"name": "abc","ratings": 3.8,"image": "im","description": "fast food"},{"id":2,"name": "def","ratings": 4.8,"image": "im","description": "fast food"},{"id":3,"name": "ghi","ratings": 3.8,"image": "im","description": "fast food"},{"id":4,"name": "klj","ratings": 3.8,"image": "im","description": "fast food"}]
-#     return jsonify({"hotels":res})
-
 @app.route('/api/v1/hotels',methods=['GET'])
 def getHotels():
     #res =  [{"id":1,"name": "abc","ratings": 3.8,"image": "im","description": "fast food"},{"id":2,"name": "def","ratings": 4.8,"image": "im","description": "fast food"},{"id":3,"name": "ghi","ratings": 3.8,"image": "im","description": "fast food"},{"id":4,"name": "klj","ratings": 3.8,"image": "im","description": "fast food"}]
@@ -423,22 +418,6 @@ def getHotels():
         res.append (d)
     return jsonify({"hotels":res})
 
-@app.route('/api/v1/map',methods=['POST'])
-def getDistanceDuration():
-    API_key = 'AIzaSyB5_O7Hzjg_DwkRD2br2vgp4QkELw9v_9w'
-    gmaps = googlemaps.Client(key = API_key)
-    json_data = request.json
-    LatOrigin = json_data["LatOrigin"]
-    LngOrigin = json_data["LngOrigin"]
-    LatDest = json_data["LatDest"]
-    LngDest = json_data["LngDest"]
-    origin = (LatOrigin, LngOrigin)
-    dest = (LatDest, LngDest)
-    result = gmaps.distance_matrix (origin, dest, mode = 'driving')
-    distance = result['rows'][0]['elements'][0]['distance']['text']
-    duration = result['rows'][0]['elements'][0]['duration']['text']
-    res = {"duration": duration , "distance" : distance}
-    return jsonify(res)
 @app.route("/")
 def home():
     return "Customer server is working!"

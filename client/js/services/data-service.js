@@ -21,7 +21,9 @@ export default class dataService {
 	}
 
 	getMenuItems() {
-		return this.$http.get(this.ip + "/api/v1/menu");
+
+		return this.$http.get(this.ip + "/api/v1/menu/"+sessionStorage.hotelId);
+		//return this.$http.get(this.ip + "/api/v1/menu");
 	}
 
 	sendOrder(orderId, customerId, takeAway, timeIn, items) {
@@ -77,5 +79,15 @@ export default class dataService {
 
 	getHotelsList(){
 		return this.$http.get(this.ip+"/api/v1/hotels");			
+	}
+
+	getMapDetails(Latorigin,Lngorigin,Latdest,Lngdest){
+		console.log("in getMapDetails");
+		return this.$http.post(this.ip + "/api/v1/map", {
+			LatOrigin:Latorigin,
+    		LngOrigin:Lngorigin,
+    		LatDest:Latdest,
+    		LngDest:Lngdest,
+		});
 	}
 }
